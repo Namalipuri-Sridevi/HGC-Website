@@ -1,0 +1,26 @@
+{
+  "products": 463,
+  "categoryCounts": {
+    "Direct Dyes": 24,
+    "Acid Dyes": 28,
+    "Basic Dyes": 21,
+    "Napthols and Base": 22,
+    "VAT Dyes": 39,
+    "UCP GO Dyes": 32,
+    "Reactive Dyes": 66,
+    "Disperse Dyes": 37,
+    "Rapid & Oil Colours": 16,
+    "FluorescentPigment": 13,
+    "Metal Oxide & Inorganic pigments": 17,
+    "Organic Pigment": 22,
+    "Fine H/C Pigment Emulsion": 15,
+    "Solvent Dyes": 16,
+    "Metal Powders": 21,
+    "Glitter DG": 11,
+    "Food Supra": 17,
+    "Chemicals in general": 40,
+    "CHT India": 6,
+    "Starch Glucose": 0
+  },
+  "categories": 20
+}

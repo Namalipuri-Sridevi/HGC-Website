@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 640 320">
+<defs>
+ <linearGradient id="spoolBody" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e8f4e3"/><stop offset=".28" stop-color="#68b92e"/><stop offset=".65" stop-color="#198244"/><stop offset="1" stop-color="#0f6137"/></linearGradient>
+ <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".5" stop-color="#c9d1cc"/><stop offset="1" stop-color="#fff"/></linearGradient>
+</defs>
+<g fill="none" stroke="#198244" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M4 249 C75 222 91 206 133 214 C173 222 155 275 211 279 C267 284 269 220 316 219 C363 218 350 267 402 265 C459 263 453 185 506 182 C545 180 555 218 589 221" stroke-width="5"/>
+ <path d="M4 249 C75 222 91 206 133 214" stroke-width="3"/>
+</g>
+<g transform="translate(115 36) rotate(-18 100 125)">
+ <path d="M30 44 C30 26 165 26 165 44 L165 211 C165 231 30 231 30 211Z" fill="url(#spoolBody)" stroke="#0b6d3a" stroke-width="3"/>
+ <ellipse cx="97.5" cy="44" rx="67.5" ry="20" fill="#f5f7f3" stroke="#126d3c" stroke-width="4"/>
+ <ellipse cx="97.5" cy="44" rx="42" ry="11" fill="url(#metal)" stroke="#126d3c" stroke-width="3"/>
+ <path d="M32 65 C69 80 127 80 163 65 M31 80 C70 95 128 95 164 80 M31 95 C70 110 128 110 164 95 M31 110 C70 125 128 125 164 110 M31 125 C70 140 128 140 164 125 M31 140 C70 155 128 155 164 140 M31 155 C70 170 128 170 164 155 M31 170 C70 185 128 185 164 170 M31 185 C70 200 128 200 164 185" stroke="#e0f4d8" stroke-width="4"/>
+ <path d="M34 69 C72 83 125 83 161 69 M34 84 C72 98 125 98 161 84 M34 99 C72 113 125 113 161 99 M34 114 C72 128 125 128 161 114 M34 129 C72 143 125 143 161 129 M34 144 C72 158 125 158 161 144 M34 159 C72 173 125 173 161 159 M34 174 C72 188 125 188 161 174" stroke="#0b6337" stroke-width="2.4"/>
+ <ellipse cx="97.5" cy="211" rx="67.5" ry="20" fill="url(#metal)" stroke="#126d3c" stroke-width="4"/>
+ <ellipse cx="97.5" cy="211" rx="42" ry="11" fill="#f4f7f2" stroke="#126d3c" stroke-width="3"/>
+</g>
+<g transform="translate(557 228)" fill="none" stroke="#e3262e" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M0 -34 C-16 -20 -12 -9 0 0 C12 -9 16 -20 0 -34Z"/>
+ <path d="M0 0 C-18 -10 -29 -6 -34 7 C-20 19 -8 12 0 3 C8 12 20 19 34 7 C29 -6 18 -10 0 0Z"/>
+ <path d="M-34 7 C-47 2 -58 12 -55 25 C-42 31 -34 21 -31 13 C-25 24 -13 30 -4 23 C-5 12 -19 4 -34 7Z"/>
+ <path d="M34 7 C47 2 58 12 55 25 C42 31 34 21 31 13 C25 24 13 30 4 23 C5 12 19 4 34 7Z"/>
+ <path d="M0 3V53 M-55 25H55"/>
+</g>
+</svg>

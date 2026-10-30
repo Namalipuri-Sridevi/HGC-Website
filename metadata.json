@@ -1,0 +1,6 @@
+{
+  "name": "H. Gokaldas & Co. - Dyes, Pigments & Chemicals",
+  "description": "Trusted manufacturers & suppliers of dyes, pigments and industrial chemicals since 1963. Featuring comprehensive product catalog and AI-powered product finder.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
