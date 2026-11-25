@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI } from '@google/genai';
 import { PRODUCTS } from './src/data/catalog.ts';
+import { createLead } from './src/server/leadService.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,6 +33,12 @@ if (hostArgIndex !== -1 && process.argv[hostArgIndex + 1]) {
 const isProd = process.env.NODE_ENV === 'production';
 
 app.use(express.json());
+
+// Lead capture API (shared with the Vercel serverless endpoint)
+app.post('/api/leads', async (req: Request, res: Response) => {
+  const result = await createLead(req.body || {});
+  return res.status(result.status).json(result.body);
+});
 
 // Health check
 app.get('/api/health', (_req: Request, res: Response) => {
