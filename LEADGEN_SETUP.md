@@ -4,7 +4,7 @@ This branch adds server-side enquiry capture. It does not deploy the site, creat
 
 ## 1. Create the Supabase project
 
-Create a new Supabase project for H. Gokaldas & Co. Keep its database credentials private.
+Use the HGC Supabase project: https://supabase.com/dashboard/project/axoqmrxnizkptquradia (project ref: `axoqmrxnizkptquradia`). Keep its database credentials private.
 
 ## 2. Create the leads table
 
@@ -18,7 +18,7 @@ The table has RLS enabled and no public policies. Browser clients must never rec
 
 Add these to the local server environment and the Vercel project's Environment Variables when you are ready to test/deploy:
 
-- `SUPABASE_URL`: Project URL from Supabase project settings.
+- `SUPABASE_URL`: `https://axoqmrxnizkptquradia.supabase.co`.
 - `SUPABASE_SECRET_KEY`: Secret secret key from Supabase project settings.
 
 Do not prefix the secret key with `VITE_`. Do not commit real credentials to Git. Use the `sb_secret_...` key from Settings → API Keys; never use the publishable key for this server endpoint.
