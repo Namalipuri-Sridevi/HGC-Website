@@ -61,8 +61,8 @@ export async function createLead(input: LeadPayload): Promise<LeadResult> {
   }
 
   const supabaseUrl = process.env.SUPABASE_URL?.replace(/\/$/, '');
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!supabaseUrl || !serviceRoleKey) {
+  const secretKey = process.env.SUPABASE_SECRET_KEY;
+  if (!supabaseUrl || !secretKey) {
     console.error('[LeadGen] Supabase server configuration is missing.');
     return { status: 503, body: { success: false, error: 'Enquiry submission is temporarily unavailable. Please try again later.' } };
   }
@@ -88,8 +88,7 @@ export async function createLead(input: LeadPayload): Promise<LeadResult> {
     const response = await fetch(`${supabaseUrl}/rest/v1/leads`, {
       method: 'POST',
       headers: {
-        apikey: serviceRoleKey,
-        Authorization: `Bearer ${serviceRoleKey}`,
+        apikey: secretKey,
         'Content-Type': 'application/json',
         Prefer: 'return=minimal',
       },
