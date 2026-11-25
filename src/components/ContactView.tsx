@@ -9,19 +9,39 @@ export const ContactView: React.FC<ContactViewProps> = ({ onSuccessToast }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [requirement, setRequirement] = useState('');
+  const [marketingOptIn, setMarketingOptIn] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
-  const handleWhatsAppEnquiry = (e: React.FormEvent) => {
+  const handleWhatsAppEnquiry = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !requirement.trim()) return;
-
-    const message = `Hello H. Gokaldas & Co.,\n\n*Product / Commercial Enquiry*\n*Name / Company:* ${name.trim()}\n*Phone / WhatsApp:* ${phone.trim() || 'Not provided'}\n*Requirement:* ${requirement.trim()}`;
-    const url = `https://wa.me/919100112561?text=${encodeURIComponent(message)}`;
-    
-    window.open(url, '_blank');
-    onSuccessToast('Redirecting to WhatsApp to send your enquiry...');
-    setName('');
-    setPhone('');
-    setRequirement('');
+    if (!name.trim() || !phone.trim() || !requirement.trim()) return;
+    setSubmitting(true);
+    setSubmitError('');
+    try {
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          leadType: 'contact',
+          contactName: name,
+          phone,
+          notes: requirement,
+          marketingOptIn,
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.error || 'We could not save your enquiry. Please try again.');
+      onSuccessToast('Thank you! Your enquiry has been received. Our team will get in touch.');
+      setName('');
+      setPhone('');
+      setRequirement('');
+      setMarketingOptIn(false);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Unable to submit your enquiry. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -153,9 +173,10 @@ export const ContactView: React.FC<ContactViewProps> = ({ onSuccessToast }) => {
               {/* Field 2: Mobile / WhatsApp Number (optional/minimal) */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-1.5">
-                  Mobile / WhatsApp Number <span className="text-stone-400 font-normal lowercase">(optional)</span>
+                  Mobile / WhatsApp Number <span className="text-red-500">*</span>
                 </label>
                 <input
+                  required
                   type="tel"
                   placeholder="e.g. +91 98765 43210"
                   value={phone}
@@ -179,19 +200,26 @@ export const ContactView: React.FC<ContactViewProps> = ({ onSuccessToast }) => {
                 ></textarea>
               </div>
 
-              {/* Submit Button routing to WhatsApp */}
+              <label className="flex items-start gap-2 text-xs text-stone-600 leading-relaxed">
+                <input type="checkbox" checked={marketingOptIn} onChange={(e) => setMarketingOptIn(e.target.checked)} className="mt-0.5 accent-[#098549]" />
+                <span>I agree to receive occasional product updates and marketing communications from H. Gokaldas &amp; Co. on WhatsApp or email. This is optional and can be withdrawn anytime.</span>
+              </label>
+              {submitError && <p role="alert" className="text-xs text-red-600">{submitError}</p>}
+
+              {/* Submit Button */}
               <div className="pt-2">
                 <button
                   type="submit"
+                  disabled={submitting}
                   className="w-full py-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-black text-sm uppercase tracking-wider shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2.5 cursor-pointer"
                 >
                   <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
                     <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.57 1.961.882 2.791.882h.005c3.179 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.768-5.764-5.768zm3.377 8.219c-.145.405-.722.756-1.026.804-.287.045-.662.064-2.143-.549-1.894-.784-3.111-2.716-3.205-2.842-.093-.127-.768-1.022-.768-1.949 0-.928.487-1.385.66-1.574.174-.189.38-.236.507-.236.127 0 .254.002.366.007.118.005.276-.045.431.328.16.386.549 1.341.597 1.439.048.098.08.213.016.34-.064.127-.096.206-.191.318-.095.111-.2.248-.286.333-.095.095-.195.198-.084.389.111.19.493.813 1.058 1.317.727.647 1.34.847 1.53.942.191.095.302.079.414-.048.111-.127.476-.556.603-.746.127-.19.254-.159.428-.095.175.063 1.111.524 1.301.619.191.095.318.143.365.222.048.079.048.46-.097.865z" />
                   </svg>
-                  <span>Send Enquiry via WhatsApp</span>
+                  <span>{submitting ? 'Submitting Enquiry...' : 'Submit Enquiry'}</span>
                 </button>
                 <p className="text-[11px] text-center text-stone-400 mt-2">
-                  Opens WhatsApp directly with your message ready to send &bull; No email required
+                  Your enquiry is securely recorded. Our team will contact you directly.
                 </p>
               </div>
             </form>
