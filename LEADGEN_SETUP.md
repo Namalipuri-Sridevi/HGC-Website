@@ -12,16 +12,16 @@ In the Supabase SQL Editor, run:
 
 `supabase/migrations/20261125_create_leads.sql`
 
-The table has RLS enabled and no public policies. Browser clients must never receive the service-role key.
+The table has RLS enabled and no public policies. Browser clients must never receive the secret key.
 
 ## 3. Configure server environment variables
 
 Add these to the local server environment and the Vercel project's Environment Variables when you are ready to test/deploy:
 
 - `SUPABASE_URL`: Project URL from Supabase project settings.
-- `SUPABASE_SERVICE_ROLE_KEY`: Secret service-role key from Supabase project settings.
+- `SUPABASE_SECRET_KEY`: Secret secret key from Supabase project settings.
 
-Do not prefix the service-role key with `VITE_`. Do not commit real credentials to Git.
+Do not prefix the secret key with `VITE_`. Do not commit real credentials to Git. Use the `sb_secret_...` key from Settings → API Keys; never use the publishable key for this server endpoint.
 
 ## 4. Local development
 
