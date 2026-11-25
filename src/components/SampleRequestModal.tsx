@@ -28,6 +28,8 @@ export const SampleRequestModal: React.FC<SampleRequestModalProps> = ({
   });
 
   const [submitting, setSubmitting] = useState(false);
+  const [marketingOptIn, setMarketingOptIn] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   useEffect(() => {
     if (product) {
@@ -42,17 +44,39 @@ export const SampleRequestModal: React.FC<SampleRequestModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-
-    setTimeout(() => {
-      setSubmitting(false);
+    setSubmitError('');
+    try {
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          leadType: 'sample_request',
+          contactName: formData.contactPerson,
+          companyName: formData.companyName,
+          email: formData.email,
+          phone: formData.phone,
+          city: formData.city,
+          productName: formData.productName,
+          ciNumber: formData.ciNumber,
+          application: formData.application,
+          requirementType: formData.quantity,
+          notes: formData.notes,
+          marketingOptIn,
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.error || 'We could not save your request. Please try again.');
       onClose();
-      onSuccessToast(
-        `Thank you! Your sample/quote request for ${formData.productName || 'our dyes'} has been sent to H. Gokaldas & Co. Secunderabad.`
-      );
-    }, 600);
+      onSuccessToast('Thank you! Your sample/quote request has been received by H. Gokaldas & Co.');
+      setMarketingOptIn(false);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Unable to submit your request. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -207,6 +231,12 @@ export const SampleRequestModal: React.FC<SampleRequestModalProps> = ({
               className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-stone-50/50 text-xs"
             ></textarea>
           </div>
+
+          <label className="flex items-start gap-2 text-[11px] text-stone-600 leading-relaxed">
+            <input type="checkbox" checked={marketingOptIn} onChange={(e) => setMarketingOptIn(e.target.checked)} className="mt-0.5 accent-[#098549]" />
+            <span>I agree to receive occasional product updates and marketing communications from H. Gokaldas &amp; Co. on WhatsApp or email. This is optional and can be withdrawn anytime.</span>
+          </label>
+          {submitError && <p role="alert" className="text-xs text-red-600">{submitError}</p>}
 
           {/* Submit Row */}
           <div className="pt-2 flex items-center justify-end gap-3">
